@@ -16,7 +16,11 @@ connectDB();
 
 app.use(
   cors({
-    origin:true,
+    origin: [
+      "http://localhost:5173",
+      "https://ironix-fitness-ten.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
