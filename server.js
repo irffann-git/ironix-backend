@@ -12,6 +12,8 @@ const adminRoutes = require("./routes/adminRoutes");
 const PORT = process.env.PORT || 4000;
 const app = express();
 
+connectDB();
+
 app.use(
   cors({
     origin: [
@@ -24,25 +26,17 @@ app.use(
 );
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
-
 // Routes
+
 app.use("/api/auth", authRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/admin/auth", adminAuthRoutes);
 app.use("/api/admin", adminRoutes);
 
-// ✅ Wait for database connection before starting the server
-const startServer = async () => {
-  try {
-    await connectDB();  // Wait for DB to connect
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error("Failed to connect to database:", error);
-    process.exit(1);
-  }
-};
 
-startServer();
+
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
